@@ -1,0 +1,33 @@
+apiVersion: v2
+name: tibiadata-api-go
+description: A Helm chart to deploy TibiaData API Go application.
+home: https://github.com/TibiaData
+icon: https://avatars.githubusercontent.com/u/45961610
+maintainers:
+  - name: TibiaData
+    url: https://tibiadata.com
+  - name: Tobias Lindberg
+    url: https://tobiasehlert.github.io
+    email: tobias@tibiadata.com
+sources:
+  - https://github.com/TibiaData/tibiadata-api-go
+  - https://github.com/TibiaData/tibiadata-helm-charts
+keywords:
+  - api
+  - tibia
+  - tibiadata
+  - tibiadata-api
+  - tibiadata-api-go
+
+type: application
+
+# This is the chart version. This version number should be incremented each time you make changes
+# to the chart and its templates, including the app version.
+# Versions are expected to follow Semantic Versioning (https://semver.org/)
+version: 0.1.0
+
+# This is the version number of the application being deployed. This version number should be
+# incremented each time you make changes to the application. Versions are not expected to
+# follow Semantic Versioning. They should reflect the version the application is using.
+# It is recommended to use it with quotes.
+appVersion: "3.7.2"
