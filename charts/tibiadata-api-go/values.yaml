@@ -7,8 +7,9 @@ replicaCount: 3
 image:
   repository: ghcr.io/tibiadata/tibiadata-api-go
   pullPolicy: IfNotPresent
-  # Overrides the image tag whose default is the chart appVersion.
+  # Overrides the image tag whose default is the chart appVersion (digest takes precedence over tag).
   tag: ""
+  digest: ""
 
 imagePullSecrets: []
 nameOverride: ""

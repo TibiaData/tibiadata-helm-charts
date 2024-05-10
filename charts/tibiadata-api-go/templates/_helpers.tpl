@@ -31,6 +31,19 @@ Create chart name and version as used by the chart label.
 {{- end }}
 
 {{/*
+Create chart image to be used by specifying tag or digest (including sha256: prefix)
+*/}}
+{{- define "tibiadata-api-go.image" -}}
+{{- $repository := .Values.image.repository -}}
+{{- if .Values.image.digest -}}
+{{- printf "%s@%s" $repository .Values.image.digest -}}
+{{- else -}}
+{{- $tag := default .Chart.AppVersion .Values.image.tag -}}
+{{- printf "%s:%s" $repository $tag -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
 Common labels
 */}}
 {{- define "tibiadata-api-go.labels" -}}
