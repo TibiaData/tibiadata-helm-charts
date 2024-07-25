@@ -18,3 +18,12 @@ helm repo update
 ```
 
 You can then run `helm search repo tibiadata` to see the charts.
+
+## General information
+
+Tibia is a registered trademark of [CipSoft GmbH](https://www.cipsoft.com/en/). Tibia and all products related to Tibia are copyright by [CipSoft GmbH](https://www.cipsoft.com/en/).
+
+## Credits
+
+- Authors: [Tobias Lindberg](https://github.com/tobiasehlert) – [List of contributors](https://github.com/TibiaData/tibiadata-helm-charts/graphs/contributors)
+- Distributed under [MIT License](LICENSE)
