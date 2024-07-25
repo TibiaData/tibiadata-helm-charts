@@ -1,5 +1,3 @@
-# TibiaData Helm Charts
-
 [![Release Status](https://github.com/TibiaData/tibiadata-helm-charts/actions/workflows/release.yaml/badge.svg?branch=main)](https://github.com/TibiaData/tibiadata-helm-charts/actions)
 [![GitHub license](https://img.shields.io/github/license/TibiaData/tibiadata-helm-charts)](https://github.com/TibiaData/tibiadata-helm-charts/blob/main/LICENSE)
 
