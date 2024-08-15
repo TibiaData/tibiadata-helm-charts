@@ -13,13 +13,13 @@ spec:
       {{- include "tibiadata-api-go.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
       annotations:
         {{- if .Values.configMap.create }}
-        checksum/cm: {{ include (print $.Template.BasePath "/templates/configmaps.yaml") . | sha256sum }}
+        checksum/cm: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
         {{- end }}
+        {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
-      {{- end }}
+        {{- end }}
       labels:
         {{- include "tibiadata-api-go.selectorLabels" . | nindent 8 }}
     spec:
