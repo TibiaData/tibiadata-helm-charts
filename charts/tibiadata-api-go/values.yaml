@@ -28,14 +28,14 @@ configMap:
   create: true
   settings:
     # generic settings
-    debug_mode: false
+    DEBUG_MODE: false
     # Gin-related settings
-    gin_mode: release
-    gin_trusted_proxies: ""
+    GIN_MODE: release
+    GIN_TRUSTED_PROXIES: ""
     # TibiaData-related settings
-    tibiadata_edition: open-source
-    tibiadata_host: undefined
-    tibiadata_restriction_mode: false
+    TIBIADATA_EDITION: open-source
+    TIBIADATA_HOST: undefined
+    TIBIADATA_RESTRICTION_MODE: false
 
 podAnnotations: {}
 
