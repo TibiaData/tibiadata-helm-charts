@@ -1,15 +1,9 @@
 name: bump-helm-chart
 
 on:
-  workflow_dispatch:
-    inputs:
-      chartName:
-        description: The name of the Helm chart to bump.
-        required: true
-        default: tibiadata-api-go
-      appVersion:
-        description: The version of the application being deployed.
-        required: true
+  repository_dispatch:
+    types:
+      - bump-helm-chart-release
 
 jobs:
   bump:
@@ -25,7 +19,7 @@ jobs:
       - name: Get current version
         id: get_version
         run: |
-          echo "{version}={$(yq eval '.version' charts/${{ github.event.inputs.chartName }}/Chart.yaml)}" >> "$GITHUB_OUTPUT"
+          echo "{version}={$(yq eval '.version' charts/${{ github.event.client_payload.chart_name }}/Chart.yaml)}" >> "$GITHUB_OUTPUT"
 
       - name: Increment Semantic Version
         uses: christian-draeger/increment-semantic-version@1.2.0
@@ -37,19 +31,19 @@ jobs:
       - name: Update Chart versions
         uses: fjogeleit/yaml-update-action@main
         with:
-          valueFile: "charts/${{ github.event.inputs.chartName }}/Chart.yaml"
-          branch: "bump/${{ github.event.inputs.chartName }}/${{ github.event.inputs.appVersion }}"
+          valueFile: "charts/${{ github.event.client_payload.chart_name }}/Chart.yaml"
+          branch: "bump/${{ github.event.client_payload.chart_name }}/${{ github.event.client_payload.release_version }}"
           targetBranch: ${{ github.event.repository.default_branch }}
           masterBranchName: ${{ github.event.repository.default_branch }}
           createPR: "true"
           labels: automated,bump
-          title: "bump: ${{ github.event.inputs.chartName }} release ${{ github.event.inputs.appVersion }}"
-          message: "bump: ${{ github.event.inputs.chartName }} release ${{ github.event.inputs.appVersion }}"
+          title: "bump: ${{ github.event.client_payload.chart_name }} release ${{ github.event.client_payload.release_version }}"
+          message: "bump: ${{ github.event.client_payload.chart_name }} release ${{ github.event.client_payload.release_version }}"
           description: |
-            The Helm chart for [${{ github.event.inputs.chartName }}](${{ github.server_url }}/${{ github.repository_owner }}/${{ github.event.inputs.chartName }}) was updated due to release [v${{ github.event.inputs.appVersion }}](${{ github.server_url }}/${{ github.repository_owner }}/${{ github.event.inputs.chartName }}/releases/tag/v${{ github.event.inputs.appVersion }}).
+            The Helm chart for [${{ github.event.client_payload.chart_name }}](${{ github.server_url }}/${{ github.repository_owner }}/${{ github.event.client_payload.chart_name }}) was updated due to release [v${{ github.event.client_payload.release_version }}](${{ github.server_url }}/${{ github.repository_owner }}/${{ github.event.client_payload.chart_name }}/releases/tag/v${{ github.event.client_payload.release_version }}).
 
             ```yaml
-            appVersion: ${{ github.event.inputs.appVersion }}
+            appVersion: ${{ github.event.client_payload.release_version }}
             version: ${{ steps.bump_version.outputs.next-version }}
             ```
 
@@ -57,5 +51,5 @@ jobs:
           changes: |
             {
               "version": "${{ steps.bump_version.outputs.next-version }}",
-              "appVersion": "${{ github.event.inputs.appVersion }}"
+              "appVersion": "${{ github.event.client_payload.release_version }}"
             }
