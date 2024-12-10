@@ -1,0 +1,61 @@
+name: bump-helm-chart
+
+on:
+  workflow_dispatch:
+    inputs:
+      chartName:
+        description: The name of the Helm chart to bump.
+        required: true
+        default: tibiadata-api-go
+      appVersion:
+        description: The version of the application being deployed.
+        required: true
+
+jobs:
+  bump:
+    permissions:
+      contents: write
+      pull-requests: write
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Get current version
+        id: get_version
+        run: |
+          echo "{version}={$(yq eval '.version' charts/${{ github.event.inputs.chartName }}/Chart.yaml)}" >> "$GITHUB_OUTPUT"
+
+      - name: Increment Semantic Version
+        uses: christian-draeger/increment-semantic-version@1.2.0
+        id: bump_version
+        with:
+          current-version: ${{ steps.get_version.outputs.version }}
+          version-fragment: patch
+
+      - name: Update Chart versions
+        uses: fjogeleit/yaml-update-action@main
+        with:
+          valueFile: "charts/${{ github.event.inputs.chartName }}/Chart.yaml"
+          branch: "bump/${{ github.event.inputs.chartName }}/${{ github.event.inputs.appVersion }}"
+          targetBranch: ${{ github.event.repository.default_branch }}
+          masterBranchName: ${{ github.event.repository.default_branch }}
+          createPR: "true"
+          labels: automated,bump
+          title: "bump: ${{ github.event.inputs.chartName }} release ${{ github.event.inputs.appVersion }}"
+          message: "bump: ${{ github.event.inputs.chartName }} release ${{ github.event.inputs.appVersion }}"
+          description: |
+            The Helm chart for [${{ github.event.inputs.chartName }}](${{ github.server_url }}/${{ github.repository_owner }}/${{ github.event.inputs.chartName }}) was updated due to release [v${{ github.event.inputs.appVersion }}](${{ github.server_url }}/${{ github.repository_owner }}/${{ github.event.inputs.chartName }}/releases/tag/v${{ github.event.inputs.appVersion }}).
+
+            ```yaml
+            appVersion: ${{ github.event.inputs.appVersion }}
+            version: ${{ steps.bump_version.outputs.next-version }}
+            ```
+
+            _This PR is automated by [${{ github.workflow }}](${{ github.server_url }}/${{ github.repository }}/blob/${{ github.event.repository.default_branch }}/.github/workflows/bump.yaml) workflow._
+          changes: |
+            {
+              "version": "${{ steps.bump_version.outputs.next-version }}",
+              "appVersion": "${{ github.event.inputs.appVersion }}"
+            }
