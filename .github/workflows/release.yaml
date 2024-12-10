@@ -15,6 +15,9 @@ jobs:
       id-token: write # needed for keyless signing
 
     runs-on: ubuntu-latest
+    outputs:
+      changed_charts: ${{ steps.chart_releaser.outputs.changed_charts }}
+      chart_version: ${{ steps.chart_releaser.outputs.chart_version }}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -33,6 +36,7 @@ jobs:
           version: latest
 
       - name: Run chart-releaser
+        id: chart_releaser
         uses: helm/chart-releaser-action@v1.6.0
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
@@ -55,3 +59,15 @@ jobs:
             fi
             helm push "${pkg}" "oci://ghcr.io/tibiadata/charts"
           done
+
+  argocd:
+    runs-on: ubuntu-latest
+    needs: release
+    steps:
+      - name: Trigger workflow in tibiadata-argocd-app-of-apps repo
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          repository: TibiaData/tibiadata-argocd-app-of-apps
+          event-type: bump-tibiadata-api-go-helm-version
+          client-payload: '{"changed_charts": "${{ needs.release.outputs.changed_charts }}", "chart_version": "${{ needs.release.outputs.chart_version }}"}'

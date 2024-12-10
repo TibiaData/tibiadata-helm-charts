@@ -29,9 +29,8 @@ jobs:
           version-fragment: patch
 
       - name: Update Chart versions
-        uses: fjogeleit/yaml-update-action@main
+        uses: fjogeleit/yaml-update-action@v0.15.0
         with:
-          valueFile: "charts/${{ github.event.client_payload.chart_name }}/Chart.yaml"
           branch: "bump/${{ github.event.client_payload.chart_name }}/${{ github.event.client_payload.release_version }}"
           targetBranch: ${{ github.event.repository.default_branch }}
           masterBranchName: ${{ github.event.repository.default_branch }}
@@ -50,6 +49,8 @@ jobs:
             _This PR is automated by [${{ github.workflow }}](${{ github.server_url }}/${{ github.repository }}/blob/${{ github.event.repository.default_branch }}/.github/workflows/bump.yaml) workflow._
           changes: |
             {
-              "version": "${{ steps.bump_version.outputs.next-version }}",
-              "appVersion": "${{ github.event.client_payload.release_version }}"
+              "charts/${{ github.event.client_payload.chart_name }}/Chart.yaml": {
+                "version": "${{ steps.bump_version.outputs.next-version }}",
+                "appVersion": "${{ github.event.client_payload.release_version }}"
+              }
             }
