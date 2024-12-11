@@ -37,6 +37,8 @@ configMap:
     TIBIADATA_HOST: undefined
     TIBIADATA_RESTRICTION_MODE: false
 
+env: []
+
 podAnnotations: {}
 
 podSecurityContext:
