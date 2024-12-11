@@ -27,7 +27,7 @@ serviceAccount:
 configMap:
   create: true
   settings:
-    # generic settings
+    # Generic settings
     DEBUG_MODE: false
     # Gin-related settings
     GIN_MODE: release
