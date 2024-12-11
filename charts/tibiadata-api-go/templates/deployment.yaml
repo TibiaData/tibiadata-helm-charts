@@ -67,7 +67,9 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.uid
+            {{- if .Values.env }}
             {{- toYaml .Values.env | nindent 12 }}
+            {{- end }}
           envFrom:
             - configMapRef:
                 name: {{ include "tibiadata-api-go.fullname" . }}
