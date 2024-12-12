@@ -6,8 +6,8 @@ icon: https://avatars.githubusercontent.com/u/45961610
 maintainers:
   - name: TibiaData
     url: https://tibiadata.com
-  - name: Tobias Lindberg
-    url: https://github.com/tobiasehlert
+  - name: tobiasehlert
+    url: https://tobiasehlert.github.io
     email: tobias@tibiadata.com
 sources:
   - https://github.com/TibiaData/tibiadata-api-go
