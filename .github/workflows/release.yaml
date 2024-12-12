@@ -20,9 +20,8 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
-
-      - name: Fetch history
-        run: git fetch --prune --unshallow
+        with:
+          fetch-depth: 0
 
       - name: Configure Git
         run: |
@@ -68,12 +67,12 @@ jobs:
 
       - name: Get Helm Chart versions
         id: get_chart_versions
-        uses: jacobtomlinson/gha-read-helm-chart@master
+        uses: jacobtomlinson/gha-read-helm-chart@0.1.3
         with:
           path: ${{ needs.release.outputs.changed_charts }}
 
       - name: Trigger workflow in tibiadata-argocd-app-of-apps repo
-        uses: peter-evans/repository-dispatch@v3
+        uses: peter-evans/repository-dispatch@v3.0.0
         with:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
           repository: TibiaData/tibiadata-argocd-app-of-apps
