@@ -7,7 +7,7 @@ maintainers:
   - name: TibiaData
     url: https://tibiadata.com
   - name: Tobias Lindberg
-    url: https://tobiasehlert.github.io
+    url: https://github.com/tobiasehlert
     email: tobias@tibiadata.com
 sources:
   - https://github.com/TibiaData/tibiadata-api-go
