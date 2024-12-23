@@ -22,7 +22,7 @@ jobs:
           echo "version=$(yq eval '.version' charts/${{ github.event.client_payload.chart_name }}/Chart.yaml)" >> $GITHUB_OUTPUT
 
       - name: Increment Semantic Version
-        uses: christian-draeger/increment-semantic-version@1.2.1
+        uses: christian-draeger/increment-semantic-version@1.2.3
         id: bump_version
         with:
           current-version: ${{ steps.get_version.outputs.version }}
