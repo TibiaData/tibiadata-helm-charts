@@ -31,11 +31,12 @@ jobs:
       - name: Update Chart versions
         uses: fjogeleit/yaml-update-action@v0.16.0
         with:
-          branch: "bump/${{ github.event.client_payload.chart_name }}/${{ github.event.client_payload.release_version }}"
-          targetBranch: ${{ github.event.repository.default_branch }}
+          branch: bump/${{ github.event.client_payload.chart_name }}/${{ github.event.client_payload.release_version }}
           masterBranchName: ${{ github.event.repository.default_branch }}
-          createPR: "true"
+          createPR: true
           labels: automated,bump
+          assignees: tobiasehlert
+          teamReviewers: TibiaData/developers
           title: "bump: ${{ github.event.client_payload.chart_name }} release ${{ github.event.client_payload.release_version }}"
           message: "bump: ${{ github.event.client_payload.chart_name }} release ${{ github.event.client_payload.release_version }}"
           description: |
