@@ -36,7 +36,7 @@ jobs:
           createPR: true
           labels: automated,bump
           assignees: tobiasehlert
-          teamReviewers: TibiaData/developers
+          teamReviewers: developers
           title: "bump: ${{ github.event.client_payload.chart_name }} release ${{ github.event.client_payload.release_version }}"
           message: "bump: ${{ github.event.client_payload.chart_name }} release ${{ github.event.client_payload.release_version }}"
           description: |
