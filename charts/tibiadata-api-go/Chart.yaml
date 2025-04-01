@@ -19,5 +19,5 @@ keywords:
   - tibiadata-api
   - tibiadata-api-go
 type: application
-version: 1.2.14
-appVersion: 4.3.5
+version: 1.2.15
+appVersion: 4.3.6
